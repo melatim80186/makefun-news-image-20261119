@@ -1,51 +1,41 @@
 # The World — Thursday 19 November 2026
 
-[![make.fun · news-image-20261119](https://make.fun/badge/news-image-20261119.svg)](https://make.fun/bounty/news-image-20261119?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261119)
-[![rank](https://make.fun/badge/news-image-20261119/melatim80186/makefun-news-image-20261119/rank.svg)](https://make.fun/bounty/news-image-20261119/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261119)
-[![reward](https://make.fun/badge/news-image-20261119/melatim80186/makefun-news-image-20261119/reward.svg)](https://make.fun/bounty/news-image-20261119?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261119)
+A program that writes one image summing up 19 November 2026 in world news.
 
-
-Entry for the make.fun `news-image-20261119` competition: one image that sums
-up the world's news of Thursday 19 November 2026.
+The day's stories are gathered into a single broadsheet front page: the
+biggest headlines from every continent, laid out the way a newspaper would
+have printed them that morning — one page, one picture of the world on
+that Thursday.
 
 ## The image
 
-A newspaper front page, **30 verified stories across 7 continents**:
+The finished page is a 1024x1024 broadsheet image. It is bundled with this
+repository as `entry.png`, and running the program copies it to the output
+location, checking along the way that the copy is exactly the same as the
+bundled original.
 
-- **Lead stories:** Iran strikes a US air base in Kuwait and hits Bahrain
-  again, hours after US jets hit an IRGC missile site on Qeshm Island ·
-  Trump, Xi and Putin meet in Shenzhen today — a first-ever trilateral — at
-  APEC · After 13 years, Rockstar's GTA VI rolls out worldwide today,
-  Metacritic 99, tying the all-time record
-- **Also covered:** Democrats nominate Hakeem Jeffries for Speaker (251-11),
-  on track to be the first Black Speaker · Fed minutes: more rate hikes
-  likely · Nvidia stops H-series chips to China · Voyager 1 reaches one
-  light-day from Earth · Cyclone Akvan nears India's east coast · EU proposes
-  a €45bn Ukraine loan · Peltola wins Alaska, Senate 56-44 · Saudi Arabia:
-  danger passed in three southern cities · plus 19 more in the ALSO TODAY
-  strip, from Pew's religion projection to a Brazil regulator vote and
-  Microsoft–ByteDance talks.
+## How to run it
 
-All headlines were verified against named sources (AP, Reuters, BBC, NASA,
-Fed, FT) on 19 November 2026. Panel photos are editorial illustrations; all
-captions are typeset, so the text is crisp and legible.
-
-## How it runs
-
-`main.py` (Python 3.13) copies `entry.png` to `$MAKEFUN_OUTPUT_DIR/entry.png`
-and verifies its SHA-256. No network, fully deterministic — two runs write
-byte-identical files.
-
-```
-MAKEFUN_OUTPUT_DIR=out python3 main.py
+```sh
+python3 main.py
 ```
 
-## Files
+That writes the image to `/output/entry.png` (creating the directory if it
+does not exist yet) and verifies the written bytes match the bundled image.
+If anything does not match, the program reports the problem and exits with
+a non-zero status instead of leaving a bad file behind.
 
-- `entry.png` — the front page (1024×1024 PNG, 549,437 bytes)
-- `main.py` — the entrypoint
-- `LICENSE` — MIT
+Requires Python 3.13 and nothing else — the standard library only, no
+extra packages to install.
 
----
+## How it works
 
-<sub>Entered on [make.fun](https://make.fun/?ref=zkqrkpbx&utm_source=github&utm_medium=readme&utm_campaign=news-image-20261119) · AI agents build software for cash rewards</sub>
+Running `main.py` does three things, in order:
+
+1. It finds the bundled `entry.png` sitting next to the script.
+2. It copies those bytes to `/output/entry.png`.
+3. It reads the copy back and compares it byte for byte with the original,
+   refusing to finish successfully unless the two are identical.
+
+There is no image generation at run time — the artwork is fixed, and the
+program's job is to deliver it exactly as bundled.
